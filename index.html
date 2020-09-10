@@ -17,9 +17,10 @@
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
     </script>
     <link rel="stylesheet" href="./style.scss">
+    
 </head>
 <style>
-
+    
 </style>
 <body>
     <header>
@@ -28,38 +29,147 @@
                 <h1></h1>
             </div>
             <div class="col-md-4">
-                <h1 class="text_titre">Welcome</h1>
+                <div class="slashed hey">
+                    <div class="top" title="Welcome"></div>
+                    <div class="bot" title="Welcome"></div>
+                </div>
             </div>
             <div class="col-md-4">
                 <h1></h1>
             </div>
         </div>
     </header>
+    <section class="row">   
+        <div class="col-md-4">
+            <h1></h1>
+        </div>
+        <div class="col-md-4">
+            <h1 class="text_titre"></h1>
+        </div>
+        <div class="col-md-4">
+            <h1></h1>
+    </section>
+    <section class="row">   
+        <div class="col-md-4">
+            <h1></h1>
+        </div>
+        <div class="col-md-4">
+            <h1 class="text_titre"></h1>
+        </div>
+        <div class="col-md-4">
+            <h1></h1>
+    </section>
+    <section class="row">   
+        <div class="col-md-4">
+            <h1></h1>
+        </div>
+        <div class="col-md-4">
+            <h1 class="text_titre"></h1>
+        </div>
+        <div class="col-md-4">
+            <h1></h1>
+    </section>
+    <section class="row">   
+        <div class="col-md-4">
+            <h1></h1>
+        </div>
+        <div class="col-md-4">
+            <h1 class="text_titre"></h1>
+        </div>
+        <div class="col-md-4">
+            <h1></h1>
+    </section>
+    <section class="row">   
+        <div class="col-md-4">
+            <h1></h1>
+        </div>
+        <div class="col-md-4">
+            <h1 class="text_titre"></h1>
+        </div>
+        <div class="col-md-4">
+            <h1></h1>
+    </section>
+    
+    <section class="row">   
+        <div class="col-md-4">
+            <h1></h1>
+        </div>
+        <div class="col-md-1">
+            <h1 class="text_titre"></h1>
+        </div>
+        <div class="col-md-4">
+            <h1></h1>
+    </section>
 
-    <article class="container">
-        <div class=>
+    <section class="row div_feu_thief">   
+        <div class="col-md-4">
+            <iframe class="box2" src="box2.html"></iframe> 
+            <div class="frame1 thief_pos"></div>
+            <div class="frame2 thief_pos"></div>
+            <div class="frame3 thief_pos"></div>
+            <div class="frame4 thief_pos"></div>
+            <div class="frame5 thief_pos"></div>
+        </div>
+        <div class="col-md-4">
+            <iframe class="box1" src="box1.html"></iframe>  
             <div id="pixel-1" class="animated-pixel rise fade"></div>
             <div id="pixel-2" class="animated-pixel rise fade"></div>
             <div id="pixel-3" class="animated-pixel rise fade"></div>
             <div class="art">
-                <div class="art--firepit" ><iframe class=hideme  src="box1.html"  height="200" width="200" ></iframe> </div>
+                <div class="art--firepit"></div>
             </div>
+        </div>  
+        <div class="col-md-4">
+            <h1></h1>
+    </section>
+    <section class="row">   
+        <div class="col-md-4">
+            <h1></h1>
         </div>
-        <div class="wil">
-            <div class="frame1 thief"></div>
-            <div class="frame2 thief"></div>
-            <div class="frame3 thief"></div>
-            <div class="frame4 thief"></div>
-            <div class="frame5 thief"></div>
-            <div class="dialog" ><p>hello</p></div>
+        <div class="col-md-4">
+            <h1 class="text_titre"></h1>
         </div>
-    </article>
+        <div class="col-md-4">
+            <h1></h1>
+    </section>
+    <section class="row">   
+        <div class="col-md-4">
+            <h1></h1>
+        </div>
+        <div class="col-md-4">
+            <h1 class="text_titre"></h1>
+        </div>
+        <div class="col-md-4">
+            <h1></h1>
+    </section>
+    <section class="row">   
+        <div class="col-md-4">
+            <h1></h1>
+        </div>
+        <div class="col-md-4">
+            <h1 class="text_titre"></h1>
+        </div>
+        <div class="col-md-4">
+            <h1></h1>
+    </section>
+    
     <script>
         $(document).ready(function(){
-            $(".thief").mouseover(function(){
-                $(".dialog").css({visibility:"visible"});
+            $(".art").mouseover(function(){
+                $(".box1").css({visibility:"visible"});
+            });
+            $(".art").mouseout(function(){  
+                $(".box1").css({visibility:"hidden"});
             });
         });
+        $(document).ready(function(){
+            $(".col-md-1").mouseover(function(){
+                $(".box2").css({visibility:"visible"});
+            });
+            $(".col-md-1").mouseout(function(){  
+                $(".box2").css({visibility:"hidden"});
+            });
+        });    
     </script>
     <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
     <script src="script.js"></script>
