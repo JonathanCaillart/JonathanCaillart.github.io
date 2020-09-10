@@ -5,10 +5,9 @@
 https://css-tricks.com/fun-times-css-pixel-art/
 */
 .art {
-  position: relative;
-  left: 92%;
+  position: absolute;
+  left: 50%;
   transform: translate(-50%, 0);
-  top: 300px;
 }
 .art--firepit {
   position: relative;
@@ -39,10 +38,10 @@ My creation
 
 @keyframes rise {
   0% {
-    top: 350px;
+    bottom: 40%;
   }
   100% {
-    top: 5%;
+    bottom: 100%;
   }
 }
 @keyframes sway {
@@ -64,11 +63,10 @@ My creation
   }
   50% {
     background-color: #f17d1d;
-    opacity: 0.6;
   }
   75% {
     background-color: #ce312c;
-    opacity: 0.3;
+    opacity: 0.1;
   }
   100% {
     opacity: 0;
@@ -78,7 +76,6 @@ My creation
   position: absolute;
   left: 50%;
   transform: translate(-50%, 0);
-  bottom: 0px;
   width: 10px;
   height: 10px;
   background-color: #f7f6b6;
@@ -98,50 +95,35 @@ My creation
   animation-delay: 2s;
 }
 
-.text_titre {
-  color: #161038;
-  font-family: Georgia, Times, "Times New Roman", serif;
-  text-align: center;
-}
-
-.hideme {
+.box1 {
   position: absolute;
+  background-color: #040505;
   visibility: hidden;
-  border-style: inset;
-  border-width: 10px;
-  border-color: lightskyblue;
-  margin-top: -125%;
-  background-color: #524e4e;
+  bottom: 270px;
+  left: 175px;
+  border: 8px inset #5b5bbe;
 }
 
-.art--firepit:hover .hideme {
-  visibility: visible;
-}
-
-.background_style {
-  background-repeat: no-repeat;
-  width: 100%;
-  height: 100%;
-}
-
-.thief {
+.box2 {
   position: absolute;
-  left: 33%;
-  top: 300px;
-  width: 50px;
-}
-
-.wil {
-  height: 280px;
-  width: 300px;
-  margin: -10px;
-  padding-left: 10px;
-}
-
-.dialog {
-  position: absolute;
-  top: 100px;
+  background-color: #040505;
   visibility: hidden;
+  left: 500px;
+  bottom: 300px;
+  border: 8px inset #5b5bbe;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  background: #110a02;
+}
+
+.thief_pos {
+  position: absolute;
+  left: 100%;
+  bottom: 300px;
 }
 
 .frame1 {
@@ -372,6 +354,87 @@ My creation
   100% {
     opacity: 0;
   }
+}
+.text_titre {
+  height: 50px;
+}
+
+.div_feu_thief {
+  height: 250px;
+}
+
+.slashed {
+  position: absolute;
+  height: 100px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+}
+
+.slashed .top,
+.slashed .bot {
+  text-align: center;
+  font: 62px/100px arial;
+  text-transform: uppercase;
+  text-align: center;
+  overflow: hidden;
+  color: #fff9f9;
+}
+
+.slashed .top:before,
+.slashed .bot:before {
+  content: attr(title);
+  -webkit-transform: rotate(5deg);
+  -moz-transform: rotate(5deg);
+  -o-transform: rotate(5deg);
+  -ms-transform: rotate(5deg);
+  transform: rotate(5deg);
+}
+
+.slashed .top {
+  position: absolute;
+  top: 0;
+  left: 5px;
+  right: 0;
+  bottom: 50%;
+}
+
+.slashed .top:before {
+  position: absolute;
+  bottom: -50px;
+  left: 0;
+  right: 0;
+}
+
+.slashed .bot {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 5px;
+  bottom: 0;
+}
+
+.slashed .bot:before {
+  position: absolute;
+  top: -50px;
+  left: 0;
+  right: 0;
+}
+
+.hey {
+  -webkit-transform: rotate(-5deg);
+  -moz-transform: rotate(-5deg);
+  -o-transform: rotate(-5deg);
+  -ms-transform: rotate(-5deg);
+  transform: rotate(-5deg);
+  background: -webkit-radial-gradient(center, #000000, #ffffff);
+  background: -moz-radial-gradient(center, #000000, #ffffff);
+  background: -o-radial-gradient(center, #000000, #ffffff);
+  background: -ms-radial-gradient(center, #000000, #ffffff);
+  background: radial-gradient(center, #000000, #ffffff);
+  border-radius: 20px;
 }
 
 /*# sourceMappingURL=/style.97fcb138.css.map */
