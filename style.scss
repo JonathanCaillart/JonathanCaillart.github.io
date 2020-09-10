@@ -1,0 +1,478 @@
+
+/*
+|======================|
+|    Pixel Art Code    |
+|======================|
+https://css-tricks.com/fun-times-css-pixel-art/
+*/
+
+// Setting the colors we're syncing up with
+$pixel-color-map: (
+  'g': #b3b3b3,
+  'o': transparent,
+  'r': #ce312c,
+  'y': #f6e711,
+  'a': #f17d1d,
+  'e': #f7f6b6,
+  'k': #868686
+);
+
+// Size of the pixels
+$pixel-size: 10px !default;
+
+$pixel-art:(
+  firepit: (
+    (o o o o o o o o o o o o o o o o o)
+    (o o o o o o o o r o o o o o o o o)
+    (o o o o o o o r r o o o o o o o o)
+    (o o o o o o r a a r o o o o o o o)
+    (o o o o o r a a y a r o o o o o o)
+    (o o o o r r a y y r a r o o o o o)
+    (o o o o r a r y e y a r r o o o o)
+    (o o o r a a y e e e y r a r o o o)
+    (o o o r a y y e e y r a a r o o o)
+    (o k k k r a y e e y a a r k k k o)
+    (k g g g k r a y e e y r k g g g k)
+    (k g g g k k k y e y k k k g g g k)
+    (o k k k g g g k k k g g g k k k o)
+    (o o o k g g k g g g k g g k o o o)
+    (o o o o k k k g g g k k k o o o o)
+    (o o o o o o o k k k o o o o o o o)
+  ),
+);
+
+// Function to read the matrix and pixelize it!
+@function pixelize($matrix, $size){
+    $l: length($matrix); // length of the entire
+    $sh: ''; // shadows list
+    $i: $l; // length of the line
+
+    // read through the length of the matrix and decide on the box shadow color and position
+    @for $i from 1 through $l{
+      $row: nth($matrix,$i); //
+
+      @for $j from 1 through length($row){
+          $item: nth($row,$j);
+
+          @if map-has-key($pixel-color-map, $item) {
+            $sh:  $sh + ($j*$size) + ' ' + ($i*$size) + ' ' + map-get($pixel-color-map, $item);
+          } @else {
+            @warn 'there is no color specified in "$pixel-color-map" for: "#{$item}"';
+          }
+
+        @if not ($j == length($row) and $i == $l) {
+          $sh: $sh + ',';
+        }
+      }
+    }
+
+    @return unquote($sh);
+}
+
+// Mixin to style each item
+@mixin style-item($matrix, $size){
+  position: relative; // pixels stack next to each other
+
+  // set width & height of icon based on size of pixels
+  width:($size * length(nth($matrix,1)));
+  height:($size * length($matrix));
+
+  &:after{
+    content: '';
+
+    // position everything from the top left corner
+    position: absolute;
+    top: (-$size);
+    left: (-$size);
+    width: $size;
+    height: $size;
+
+    // this is where we make the stitch
+    box-shadow: pixelize($matrix,$size);
+  }
+}
+
+// Page styling
+//body {
+ // background: rgb(3, 3, 3);
+//}
+
+.art {
+  position: relative;
+  left: 92%;
+  transform: translate(-50%, 0);
+  top: 300px;
+
+   @each $key, $value in $pixel-art{
+    &--#{$key}{
+      @include style-item($value, $pixel-size);
+    }
+  }
+}
+
+/*
+|======================|
+|    Animation Code    |
+|======================|
+My creation
+*/
+
+:root {
+  --animation-time: 5s;
+  --x-position-max: 0;
+  --x-position-min: 0;
+}
+
+@keyframes rise {
+  0% { top: 350px; }
+  100% { top: 5%; }
+}
+
+@keyframes sway {
+  0% { margin-left: var(--x-position-max); }
+  100% { margin-left: var(--x-position-min); }
+}
+
+@keyframes fade {
+  0% {
+    background-color: initial;
+    opacity: initial;
+  }
+  25% {
+    opacity: 1;
+    background-color: #f6e711;
+  }
+  50% {
+    background-color: #f17d1d;
+    opacity:0.6
+  }
+  75% {
+    background-color: #ce312c;
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.animated-pixel {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  bottom:0px;
+  
+  width: $pixel-size;
+  height: $pixel-size;
+  background-color: #f7f6b6;
+  animation: rise var(--animation-time) ease infinite,
+    fade var(--animation-time) ease-out infinite,
+    sway 2s ease-in-out alternate infinite;
+  animation-delay: -1s;
+}
+
+#pixel-1 {
+  animation-delay: 0s;
+}
+
+#pixel-2 {
+  animation-delay: 1s;
+}
+
+#pixel-3 {
+  animation-delay: 2s;
+}
+
+
+.text_titre {
+color:rgb(22, 16, 56) ;
+font-family: Georgia, Times, 'Times New Roman', serif;
+text-align: center;
+
+}
+
+//iframe1
+.hideme {
+position: absolute;
+visibility:hidden;
+border-style: inset;
+border-width:10px;
+border-color: lightskyblue;
+margin-top:-125%;
+background-color:rgb(82, 78, 78);
+
+}
+
+
+.art--firepit:hover .hideme {
+
+  visibility: visible;
+}
+
+.background_style{
+background-repeat: no-repeat;
+width: 100%;
+height: 100%;
+
+
+
+}
+
+//voleur
+.thief {
+  position : absolute;
+  left : 33%;
+  top :300px ;
+  width: 50px;
+  
+}
+
+.wil {
+height:280px;
+width:300px;
+margin: -10px;
+padding-left: 10px;
+
+}
+
+.dialog {
+position: absolute;
+top:100px;
+visibility: hidden;
+
+
+}
+.frame1 {
+  width : 11px;
+  height : 11px;
+  -webkit-animation : idle ease-in-out 7s infinite;
+  animation : idle ease-in-out 7s infinite;
+  box-shadow : 30px 80px #3c272a,10px 110px #3c272a,10px 100px #3c272a,20px 90px #3c272a,20px 80px #3c272a,30px 90px #3c272a,30px 70px #3c272a,40px 70px #3c272a,30px 60px #3c272a,30px 50px #3c272a,30px 40px #3c272a,30px 30px #3c272a,40px 30px #3c272a,30px 20px #3c272a,40px 20px #3c272a,30px 10px #3c272a,20px 10px #3c272a,40px 80px #3c272a,40px 90px #3c272a,30px 100px #3c272a,30px 110px #3c272a,40px 100px #3c272a,40px 110px #3c272a,30px 120px #3c272a,40px 120px #3c272a,50px 120px #3c272a,60px 120px #3c272a,80px 120px #3c272a,90px 110px #3c272a,90px 100px #3c272a,50px 140px #3c272a,60px 140px #3c272a,70px 140px #3c272a,70px 150px #3c272a,70px 160px #3c272a,30px 140px #3c272a,30px 150px #3c272a,30px 160px #3c272a,30px 170px #3c272a,0px 120px #502723,0px 130px #502723,30px 130px #502723,40px 130px #502723,30px 180px #502723,30px 190px #502723,70px 120px #502723,40px 140px #403d3f,40px 150px #403d3f,40px 160px #403d3f,80px 140px #403d3f,80px 150px #403d3f,80px 160px #403d3f,50px 130px #793926,60px 130px #793926,80px 130px #793926,80px 180px #793926,80px 190px #793926,70px 110px #793926,70px 100px #793926,70px 90px #793926,70px 80px #793926,120px 110px #793926,80px 170px #3c272a,80px 110px #403d3f,80px 100px #403d3f,80px 90px #403d3f,80px 80px #403d3f,80px 70px #403d3f,60px 70px #403d3f,50px 70px #403d3f,50px 80px #403d3f,60px 80px #403d3f,50px 90px #403d3f,60px 90px #403d3f,60px 100px #403d3f,50px 100px #403d3f,50px 110px #403d3f,60px 110px #403d3f,90px 60px #403d3f,90px 50px #403d3f,90px 40px #403d3f,90px 30px #403d3f,80px 30px #403d3f,80px 20px #403d3f,70px 20px #403d3f,60px 20px #403d3f,50px 20px #403d3f,50px 30px #403d3f,70px 30px #403d3f,60px 30px #403d3f,40px 10px #403d3f,50px 10px #403d3f,60px 10px #403d3f,100px 110px #403d3f,110px 110px #403d3f,70px 130px #cba287,70px 70px #a27547,40px 60px #a27547,40px 50px #a27547,40px 40px #a27547,50px 40px #503b26,60px 40px #a27547,70px 40px #a27547,80px 40px #503b26,50px 50px #f4ae67,50px 60px #f4ae67,60px 60px #f4ae67,60px 50px #f4ae67,70px 50px #f4ae67,120px 120px #cba287,120px 130px #cba287,120px 100px #502723,80px 50px #f4ae67,80px 60px #f4ae67,70px 60px #f4ae67;
+}
+.frame2 {
+  width : 11px;
+  height : 11px;
+  -webkit-animation : blink ease-in-out 7s infinite;
+  animation : blink ease-in-out 7s infinite;
+  box-shadow : 30px 80px #3c272a,10px 110px #3c272a,10px 100px #3c272a,20px 90px #3c272a,20px 80px #3c272a,30px 90px #3c272a,30px 70px #3c272a,40px 70px #3c272a,30px 60px #3c272a,30px 50px #3c272a,30px 40px #3c272a,30px 30px #3c272a,40px 30px #3c272a,30px 20px #3c272a,40px 20px #3c272a,30px 10px #3c272a,20px 10px #3c272a,40px 80px #3c272a,40px 90px #3c272a,30px 100px #3c272a,30px 110px #3c272a,40px 100px #3c272a,40px 110px #3c272a,30px 120px #3c272a,40px 120px #3c272a,50px 120px #3c272a,60px 120px #3c272a,80px 120px #3c272a,90px 110px #3c272a,90px 100px #3c272a,50px 140px #3c272a,60px 140px #3c272a,70px 140px #3c272a,70px 150px #3c272a,70px 160px #3c272a,30px 140px #3c272a,30px 150px #3c272a,30px 160px #3c272a,30px 170px #3c272a,0px 120px #502723,0px 130px #502723,30px 130px #502723,40px 130px #502723,30px 180px #502723,30px 190px #502723,70px 120px #502723,40px 140px #403d3f,40px 150px #403d3f,40px 160px #403d3f,80px 140px #403d3f,80px 150px #403d3f,80px 160px #403d3f,50px 130px #793926,60px 130px #793926,80px 130px #793926,80px 180px #793926,80px 190px #793926,70px 110px #793926,70px 100px #793926,70px 90px #793926,70px 80px #793926,120px 110px #793926,80px 170px #3c272a,80px 110px #403d3f,80px 100px #403d3f,80px 90px #403d3f,80px 80px #403d3f,80px 70px #403d3f,60px 70px #403d3f,50px 70px #403d3f,50px 80px #403d3f,60px 80px #403d3f,50px 90px #403d3f,60px 90px #403d3f,60px 100px #403d3f,50px 100px #403d3f,50px 110px #403d3f,60px 110px #403d3f,90px 60px #403d3f,90px 50px #403d3f,90px 40px #403d3f,90px 30px #403d3f,80px 30px #403d3f,80px 20px #403d3f,70px 20px #403d3f,60px 20px #403d3f,50px 20px #403d3f,50px 30px #403d3f,70px 30px #403d3f,60px 30px #403d3f,40px 10px #403d3f,50px 10px #403d3f,60px 10px #403d3f,100px 110px #403d3f,110px 110px #403d3f,70px 130px #cba287,70px 70px #a27547,40px 60px #a27547,40px 50px #a27547,40px 40px #a27547,50px 40px #a27547,60px 40px #a27547,70px 40px #a27547,80px 40px #a27547,50px 50px #f4ae67,50px 60px #f4ae67,60px 60px #f4ae67,60px 50px #f4ae67,70px 50px #f4ae67,120px 120px #cba287,120px 130px #cba287,120px 100px #502723,80px 50px #f4ae67,80px 60px #f4ae67,70px 60px #f4ae67;
+}
+.frame3 {
+  width : 11px;
+  height : 11px;
+  -webkit-animation : spin1 ease-in-out 7s infinite;
+  animation : spin1 ease-in-out 7s infinite;
+  box-shadow : 30px 80px #3c272a,10px 110px #3c272a,10px 100px #3c272a,20px 90px #3c272a,20px 80px #3c272a,30px 90px #3c272a,30px 70px #3c272a,40px 70px #3c272a,30px 60px #3c272a,30px 50px #3c272a,30px 40px #3c272a,30px 30px #3c272a,40px 30px #3c272a,30px 20px #3c272a,40px 20px #3c272a,30px 10px #3c272a,20px 10px #3c272a,40px 80px #3c272a,40px 90px #3c272a,30px 100px #3c272a,30px 110px #3c272a,40px 100px #3c272a,40px 110px #3c272a,30px 120px #3c272a,40px 120px #3c272a,50px 120px #3c272a,60px 120px #3c272a,80px 120px #3c272a,90px 110px #3c272a,90px 100px #3c272a,50px 140px #3c272a,60px 140px #3c272a,70px 140px #3c272a,70px 150px #3c272a,70px 160px #3c272a,30px 140px #3c272a,30px 150px #3c272a,30px 160px #3c272a,30px 170px #3c272a,0px 120px #502723,0px 130px #502723,30px 130px #502723,40px 130px #502723,30px 180px #502723,30px 190px #502723,70px 120px #502723,40px 140px #403d3f,40px 150px #403d3f,40px 160px #403d3f,80px 140px #403d3f,80px 150px #403d3f,80px 160px #403d3f,50px 130px #793926,60px 130px #793926,80px 130px #793926,80px 180px #793926,80px 190px #793926,70px 110px #793926,70px 100px #793926,70px 90px #793926,70px 80px #793926,120px 110px #793926,80px 170px #3c272a,80px 110px #403d3f,80px 100px #403d3f,80px 90px #403d3f,80px 80px #403d3f,80px 70px #403d3f,60px 70px #403d3f,50px 70px #403d3f,50px 80px #403d3f,60px 80px #403d3f,50px 90px #403d3f,60px 90px #403d3f,60px 100px #403d3f,50px 100px #403d3f,50px 110px #403d3f,60px 110px #403d3f,90px 60px #403d3f,90px 50px #403d3f,90px 40px #403d3f,90px 30px #403d3f,80px 30px #403d3f,80px 20px #403d3f,70px 20px #403d3f,60px 20px #403d3f,50px 20px #403d3f,50px 30px #403d3f,70px 30px #403d3f,60px 30px #403d3f,40px 10px #403d3f,50px 10px #403d3f,60px 10px #403d3f,100px 110px #403d3f,110px 110px #502723,70px 130px #cba287,70px 70px #a27547,40px 60px #a27547,40px 50px #a27547,40px 40px #a27547,50px 40px #503b26,60px 40px #a27547,70px 40px #a27547,80px 40px #503b26,50px 50px #f4ae67,50px 60px #f4ae67,60px 60px #f4ae67,60px 50px #f4ae67,70px 50px #f4ae67,120px 120px #cba287,120px 130px #cba287,80px 50px #f4ae67,80px 60px #f4ae67,70px 60px #f4ae67,130px 120px #cba287,130px 110px #cba287,140px 110px #cba287;
+}
+.frame4 {
+  width : 11px;
+  height : 11px;
+  -webkit-animation : spin2 ease-in-out 7s infinite;
+  animation : spin2 ease-in-out 7s infinite;
+  box-shadow : 30px 80px #3c272a,10px 110px #3c272a,10px 100px #3c272a,20px 90px #3c272a,20px 80px #3c272a,30px 90px #3c272a,30px 70px #3c272a,40px 70px #3c272a,30px 60px #3c272a,30px 50px #3c272a,30px 40px #3c272a,30px 30px #3c272a,40px 30px #3c272a,30px 20px #3c272a,40px 20px #3c272a,30px 10px #3c272a,20px 10px #3c272a,40px 80px #3c272a,40px 90px #3c272a,30px 100px #3c272a,30px 110px #3c272a,40px 100px #3c272a,40px 110px #3c272a,30px 120px #3c272a,40px 120px #3c272a,50px 120px #3c272a,60px 120px #3c272a,80px 120px #3c272a,90px 110px #3c272a,90px 100px #3c272a,50px 140px #3c272a,60px 140px #3c272a,70px 140px #3c272a,70px 150px #3c272a,70px 160px #3c272a,30px 140px #3c272a,30px 150px #3c272a,30px 160px #3c272a,30px 170px #3c272a,0px 120px #502723,0px 130px #502723,30px 130px #502723,40px 130px #502723,30px 180px #502723,30px 190px #502723,70px 120px #502723,40px 140px #403d3f,40px 150px #403d3f,40px 160px #403d3f,80px 140px #403d3f,80px 150px #403d3f,80px 160px #403d3f,50px 130px #793926,60px 130px #793926,80px 130px #793926,80px 180px #793926,80px 190px #793926,70px 110px #793926,70px 100px #793926,70px 90px #793926,70px 80px #793926,120px 110px #793926,80px 170px #3c272a,80px 110px #403d3f,80px 100px #403d3f,80px 90px #403d3f,80px 80px #403d3f,80px 70px #403d3f,60px 70px #403d3f,50px 70px #403d3f,50px 80px #403d3f,60px 80px #403d3f,50px 90px #403d3f,60px 90px #403d3f,60px 100px #403d3f,50px 100px #403d3f,50px 110px #403d3f,60px 110px #403d3f,90px 60px #403d3f,90px 50px #403d3f,90px 40px #403d3f,90px 30px #403d3f,80px 30px #403d3f,80px 20px #403d3f,70px 20px #403d3f,60px 20px #403d3f,50px 20px #403d3f,50px 30px #403d3f,70px 30px #403d3f,60px 30px #403d3f,40px 10px #403d3f,50px 10px #403d3f,60px 10px #403d3f,100px 110px #403d3f,110px 110px #403d3f,70px 130px #cba287,70px 70px #a27547,40px 60px #a27547,40px 50px #a27547,40px 40px #a27547,50px 40px #503b26,60px 40px #a27547,70px 40px #a27547,80px 40px #503b26,50px 50px #f4ae67,50px 60px #f4ae67,60px 60px #f4ae67,60px 50px #f4ae67,70px 50px #f4ae67,80px 50px #f4ae67,80px 60px #f4ae67,70px 60px #f4ae67,130px 110px #cba287,140px 110px #cba287,120px 100px #cba287,120px 90px #cba287,120px 120px #502723,130px 100px #cba287;
+}
+.frame5 {
+  width : 11px;
+  height : 11px;
+  -webkit-animation : spin3 ease-in-out 7s infinite;
+  animation : spin3 ease-in-out 7s infinite;
+  box-shadow : 30px 80px #3c272a,10px 110px #3c272a,10px 100px #3c272a,20px 90px #3c272a,20px 80px #3c272a,30px 90px #3c272a,30px 70px #3c272a,40px 70px #3c272a,30px 60px #3c272a,30px 50px #3c272a,30px 40px #3c272a,30px 30px #3c272a,40px 30px #3c272a,30px 20px #3c272a,40px 20px #3c272a,30px 10px #3c272a,20px 10px #3c272a,40px 80px #3c272a,40px 90px #3c272a,30px 100px #3c272a,30px 110px #3c272a,40px 100px #3c272a,40px 110px #3c272a,30px 120px #3c272a,40px 120px #3c272a,50px 120px #3c272a,60px 120px #3c272a,80px 120px #3c272a,90px 110px #3c272a,90px 100px #3c272a,50px 140px #3c272a,60px 140px #3c272a,70px 140px #3c272a,70px 150px #3c272a,70px 160px #3c272a,30px 140px #3c272a,30px 150px #3c272a,30px 160px #3c272a,30px 170px #3c272a,0px 120px #502723,0px 130px #502723,30px 130px #502723,40px 130px #502723,30px 180px #502723,30px 190px #502723,70px 120px #502723,40px 140px #403d3f,40px 150px #403d3f,40px 160px #403d3f,80px 140px #403d3f,80px 150px #403d3f,80px 160px #403d3f,50px 130px #793926,60px 130px #793926,80px 130px #793926,80px 180px #793926,80px 190px #793926,70px 110px #793926,70px 100px #793926,70px 90px #793926,70px 80px #793926,120px 110px #793926,80px 170px #3c272a,80px 110px #403d3f,80px 100px #403d3f,80px 90px #403d3f,80px 80px #403d3f,80px 70px #403d3f,60px 70px #403d3f,50px 70px #403d3f,50px 80px #403d3f,60px 80px #403d3f,50px 90px #403d3f,60px 90px #403d3f,60px 100px #403d3f,50px 100px #403d3f,50px 110px #403d3f,60px 110px #403d3f,90px 60px #403d3f,90px 50px #403d3f,90px 40px #403d3f,90px 30px #403d3f,80px 30px #403d3f,80px 20px #403d3f,70px 20px #403d3f,60px 20px #403d3f,50px 20px #403d3f,50px 30px #403d3f,70px 30px #403d3f,60px 30px #403d3f,40px 10px #403d3f,50px 10px #403d3f,60px 10px #403d3f,100px 110px #cba287,110px 110px #cba287,70px 130px #cba287,70px 70px #a27547,40px 60px #a27547,40px 50px #a27547,40px 40px #a27547,50px 40px #503b26,60px 40px #a27547,70px 40px #a27547,80px 40px #503b26,50px 50px #f4ae67,50px 60px #f4ae67,60px 60px #f4ae67,60px 50px #f4ae67,70px 50px #f4ae67,80px 50px #f4ae67,80px 60px #f4ae67,70px 60px #f4ae67,120px 100px #cba287,120px 90px #cba287,130px 110px #502723,110px 100px #cba287;
+}
+
+/* Animations Below */
+@-webkit-keyframes idle {
+  0% {
+      opacity : 1;
+  }
+  25% {
+      opacity : 1;
+  }
+  25.1% {
+      opacity : 0;
+  }
+  26.9% {
+      opacity : 0;
+  }
+  27% {
+      opacity : 1;
+  }
+  100% {
+      opacity : 1;
+  }
+}
+
+@keyframes idle {
+  0% {
+      opacity : 1;
+  }
+  25% {
+      opacity : 1;
+  }
+  25.1% {
+      opacity : 0;
+  }
+  26.9% {
+      opacity : 0;
+  }
+  27% {
+      opacity : 1;
+  }
+  100% {
+      opacity : 1;
+  }
+}
+
+@-webkit-keyframes blink {
+  0% {
+      opacity : 0;
+  }
+  1% {
+      opacity : 1;
+  }
+  10% {
+      opacity : 0;
+  }
+  100% {
+      opacity : 0;
+  }
+}
+
+@keyframes blink {
+  0% {
+      opacity : 0;
+  }
+  1% {
+      opacity : 1;
+  }
+  10% {
+      opacity : 0;
+  }
+  100% {
+      opacity : 0;
+  }
+}
+
+@-webkit-keyframes spin1 {
+  0% {
+      opacity : 0;
+  }
+  24.9% {
+      opacity : 0;
+  }
+  25% {
+      opacity : 1;
+  }
+  25.9% {
+      opacity : 1;
+  }
+  26% {
+      opacity : 0;
+  }
+  100% {
+      opacity : 0;
+  }
+}
+
+@keyframes spin1 {
+  0% {
+      opacity : 0;
+  }
+  24% {
+      opacity : 0;
+  }
+  25% {
+      opacity : 1;
+  }
+  27% {
+      opacity : 1;
+  }
+  28% {
+      opacity : 0;
+  }
+  100% {
+      opacity : 0;
+  }
+}
+
+@-webkit-keyframes spin2 {
+  0% {
+      opacity : 0;
+  }
+  25% {
+      opacity : 0;
+  }
+  26% {
+      opacity : 1;
+  }
+  28% {
+      opacity : 1;
+  }
+  29% {
+      opacity : 0;
+  }
+  100% {
+      opacity : 0;
+  }
+}
+
+@keyframes spin2 {
+  0% {
+      opacity : 0;
+  }
+  25% {
+      opacity : 0;
+  }
+  26% {
+      opacity : 1;
+  }
+  28% {
+      opacity : 1;
+  }
+  29% {
+      opacity : 0;
+  }
+  100% {
+      opacity : 0;
+  }
+}
+
+@-webkit-keyframes spin3 {
+  0% {
+      opacity : 0;
+  }
+  26% {
+      opacity : 0;
+  }
+  27% {
+      opacity : 1;
+  }
+  29% {
+      opacity : 1;
+  }
+  30% {
+      opacity : 0;
+  }
+  100% {
+      opacity : 0;
+  }
+}
+
+@keyframes spin3 {
+  0% {
+      opacity : 0;
+  }
+  26% {
+      opacity : 0;
+  }
+  27% {
+      opacity : 1;
+  }
+  29% {
+      opacity : 1;
+  }
+  30% {
+      opacity : 0;
+  }
+  100% {
+      opacity : 0;
+  }
+}
+
